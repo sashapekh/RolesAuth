@@ -24,13 +24,13 @@ class AdminUserController extends Controller
     }
 
     public function editUser(Request $request, $id) {
-        $user = User::where('email','=',$request->get('email'))->first();
+        $user = User::where('id','=',$id)->first();
+//        dd($request->all());
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         if ($request->get('password') != null) {
             $user->password = bcrypt($request->get('password'));
         }
-
         if (!$user->hasRole($request->get('role'))) {
             $user->attachRole(Role::where('name','=',$request->get('role'))->first());
         }
@@ -46,15 +46,20 @@ class AdminUserController extends Controller
     }
 
     public function changeRolesPermission(Request $request) {
+        // Удаляю все здачения в таблице
+        DB::table('permission_role')->delete();
         // получение имен ролей
-        $names = Role::all()->pluck('name');
+        $roles = Role::all()->pluck('name');
 
-        foreach ($names as $name) {
-            $role_obj = Role::where('name','=',$name)->first();
-
-            $role_obj->attachPermissions($request->get($name));
+        foreach ($roles as $role) {
+            $role_obj = Role::where('name','=',$role)->first();
+            $permissions_array = $request->get($role);
+            //Проверяю или  request->value != null
+            if ($request->get($role) != null) {
+                // назначаю права ролям
+                $role_obj->attachPermissions($permissions_array);
+            }
         }
-
-        echo 'ok';
+        return redirect()->back();
     }
 }

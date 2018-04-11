@@ -50,13 +50,20 @@
                 <tr>
                     <td>{{$permission->display_name}}</td>
                     @foreach($roles as $role)
-                        <th><input type="checkbox" name="{{$role->name}}[]" value="{{$permission->id}}" ></th>
+
+                      {{--{{dd($role->hasPermission($permission))}}--}}
+                        @if($role->hasPermission($permission->name))
+                            <th><input type="checkbox" name="{{$role->name}}[]" value="{{$permission->id}}" checked></th>
+                            @else
+                            <th><input type="checkbox" name="{{$role->name}}[]" value="{{$permission->id}}"></th>
+                        @endif
                     @endforeach
                 </tr>
             @endforeach
-            <button type="submit">Save changes</button>
         </table>
+        <br>
 
+        <button type="submit">Save changes</button>
     </form>
 
 </body>

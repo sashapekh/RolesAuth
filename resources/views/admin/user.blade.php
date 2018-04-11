@@ -28,8 +28,15 @@
         <h1></h1>
         @foreach($roles as $role)
             <br>
-            <label for="role">{{$role}}</label>
-            <input type="checkbox" name="role" value="{{$role}}">
+            @if($user->hasRole($role))
+                <label for="role">{{$role}}</label>
+                <input type="checkbox" name="role" value="{{$role}}" checked>
+            @else
+                <label for="role">{{$role}}</label>
+                <input type="checkbox" name="role" value="{{$role}}">
+            @endif
+
+
         @endforeach
         <button type="submit">Изменить</button>
     </form>

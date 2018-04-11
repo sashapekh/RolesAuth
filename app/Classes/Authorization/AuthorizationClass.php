@@ -11,13 +11,19 @@ use Dlnsk\HierarchicalRBAC\Authorization;
 
 class AuthorizationClass extends Authorization
 {
-	public function getPermissions() {
+	 public function getPermissions() {
 		return [
 			'do_anything' => [
 			    'description'=> 'Can do anything'
             ],
 		];
 	}
+
+
+	public function showPermissions() {
+
+	     return $this->getPermissions();
+    }
 
 	public function getRoles() {
 		return [

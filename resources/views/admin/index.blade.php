@@ -8,16 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    @if(Auth::guest())
-        <h1>You must register</h1>
-        <a href="{{ redirect('register') }}">Register</a>
-    @else
-        <h1>Shows roles</h1>
-        @can('do_anything')
-            <h2>this is admin</h2>
-            @else
-                <h2>simple user</h2>
-        @endcan
-    @endif
+    <h1>Title of admin panel</h1>
 </body>
 </html>

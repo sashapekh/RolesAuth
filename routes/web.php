@@ -24,6 +24,17 @@ Route::get('/logout', function (){
     return redirect('/');
 });
 
-Route::get('/roles', function (){
-   return view('check_roles');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::get('/', 'DashBoardController@index');
+
+    //users
+    Route::get('/users', 'AdminUserController@list');
+    Route::get('/user/{id}', 'AdminUserController@get_user')->name('get_user');
+    Route::post('/user/{id}','AdminUserController@editUser')->name('get_user');
+    // post method for edit user
+
+    //
+    Route::get('/roles', 'AdminUserController@rolesForm');
+    Route::post('/roles', 'AdminUserController@changeRolesPermission')->name('rolesChange');
+
 });
